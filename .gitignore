@@ -1,0 +1,13 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+*.log
+uploads/**
+!uploads/images/.gitkeep
+!uploads/videos/.gitkeep
+!uploads/documents/.gitkeep
+!uploads/audio/.gitkeep
+.DS_Store
+coverage/

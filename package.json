@@ -1,0 +1,21 @@
+{
+  "name": "chat-platform",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/api & npm run dev --workspace=apps/web && wait",
+    "dev:api": "npm run dev --workspace=apps/api",
+    "dev:web": "npm run dev --workspace=apps/web",
+    "build": "npm run build --workspace=packages/shared && npm run build --workspace=apps/api && npm run build --workspace=apps/web",
+    "seed": "npm run seed --workspace=apps/api",
+    "test": "npm run test --workspace=apps/api",
+    "lint": "npm run lint --workspace=apps/api && npm run lint --workspace=apps/web"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  }
+}
