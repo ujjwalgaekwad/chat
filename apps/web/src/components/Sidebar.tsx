@@ -43,7 +43,7 @@ export function Sidebar() {
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-pine-500 font-display text-sm text-white">
             C
           </span>
-          <span className="font-display text-base text-ink-900 dark:text-ink-50">Current</span>
+          <span className="font-display text-base text-ink-900 dark:text-ink-50">Chat</span>
         </div>
         <div className="flex items-center gap-1">
           <button

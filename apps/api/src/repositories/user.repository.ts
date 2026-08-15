@@ -1,6 +1,8 @@
 import { User, type UserDocument } from "../models/User";
 import type { Types } from "mongoose";
 
+const EMAIL_DOMAIN_REGEX = /@demo\.com$/i;
+
 export const userRepository = {
   findByEmail(email: string) {
     return User.findOne({ email: email.toLowerCase() }).select("+passwordHash");
@@ -19,7 +21,10 @@ export const userRepository = {
   },
 
   listAll(excludeUserId: string, limit = 50) {
-    return User.find({ _id: { $ne: excludeUserId } })
+    return User.find({
+      _id: { $ne: excludeUserId },
+      email: { $not: EMAIL_DOMAIN_REGEX },
+    })
       .sort({ name: 1 })
       .limit(limit)
       .lean();
@@ -28,6 +33,7 @@ export const userRepository = {
   search(query: string, excludeUserId: string, limit = 20) {
     return User.find({
       _id: { $ne: excludeUserId },
+      email: { $not: EMAIL_DOMAIN_REGEX },
       $text: { $search: query },
     })
       .limit(limit)

@@ -9,6 +9,16 @@ import { AppLayout } from "./pages/AppLayout";
 import { ChatPage } from "./pages/ChatPage";
 import { EmptyChatPage } from "./pages/EmptyChatPage";
 import { SettingsPage } from "./pages/SettingsPage";
+import { useAuthStore } from "./stores/auth.store";
+
+function RootRedirect() {
+  const user = useAuthStore((s) => s.user);
+  const isHydrating = useAuthStore((s) => s.isHydrating);
+
+  if (isHydrating) return null;
+
+  return <Navigate to={user ? "/app" : "/login"} replace />;
+}
 
 export default function App() {
   useSessionBootstrap();
@@ -33,8 +43,8 @@ export default function App() {
             </Route>
           </Route>
 
-          <Route path="/" element={<Navigate to="/app" replace />} />
-          <Route path="*" element={<Navigate to="/app" replace />} />
+          <Route path="/" element={<RootRedirect />} />
+          <Route path="*" element={<RootRedirect />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

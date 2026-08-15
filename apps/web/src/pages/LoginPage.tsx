@@ -86,7 +86,7 @@ export function AuthShell({ children }: { children: React.ReactNode }) {
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-pine-500 font-display text-lg text-white">
             C
           </span>
-          <span className="font-display text-lg text-ink-900 dark:text-ink-50">Current</span>
+          <span className="font-display text-lg text-ink-900 dark:text-ink-50">Chat</span>
         </div>
         <div className="rounded-2xl border border-ink-200 bg-white p-8 shadow-panel dark:border-ink-800 dark:bg-ink-900">
           {children}
