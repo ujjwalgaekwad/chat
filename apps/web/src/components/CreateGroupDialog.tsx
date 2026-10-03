@@ -6,6 +6,7 @@ import { useAllUsers, useSearchUsers } from "../hooks/useAuth";
 import { useCreateGroup } from "../hooks/useConversations";
 import { useUiStore } from "../stores/ui.store";
 import type { UserDTO } from "@chat-platform/shared";
+import useDebounce from "../hooks/useDebounce";
 
 export function CreateGroupDialog({ onClose }: { onClose: () => void }) {
   const [name, setName] = useState("");
@@ -13,9 +14,10 @@ export function CreateGroupDialog({ onClose }: { onClose: () => void }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<UserDTO[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const debouncedValue = useDebounce(query);
 
   const { data: allUsers } = useAllUsers();
-  const { data: searchResults } = useSearchUsers(query);
+  const { data: searchResults } = useSearchUsers(debouncedValue);
   const createGroup = useCreateGroup();
   const setActiveConversationId = useUiStore((s) => s.setActiveConversationId);
 

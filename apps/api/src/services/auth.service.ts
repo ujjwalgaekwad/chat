@@ -61,12 +61,12 @@ export const authService = {
   async login(input: LoginInput, userAgent?: string) {
     const user = await userRepository.findByEmail(input.email);
     if (!user) {
-      throw ApiError.unauthorized("Invalid email or password", "INVALID_CREDENTIALS");
+      throw ApiError.unauthorized("Invalid email", "INVALID_CREDENTIALS");
     }
 
     const valid = await verifyPassword(user.passwordHash, input.password);
     if (!valid) {
-      throw ApiError.unauthorized("Invalid email or password", "INVALID_CREDENTIALS");
+      throw ApiError.unauthorized("Invalid password", "INVALID_CREDENTIALS");
     }
 
     const tokens = await issueTokenPair(user._id.toString(), userAgent);

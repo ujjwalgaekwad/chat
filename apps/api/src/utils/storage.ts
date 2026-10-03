@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { randomUUID } from "crypto";
 import { env } from "../config/env";
+import { uploadToCloudinary } from "../services/cloudinary.service";
 
 export interface StoredFile {
   url: string;
@@ -31,6 +32,9 @@ export class LocalDiskStorageProvider implements StorageProvider {
     mimeType: string;
     category: "images" | "videos" | "documents" | "audio";
   }): Promise<StoredFile> {
+    const result = await uploadToCloudinary(file.buffer, {
+      folder: `chat-platform/${file.category}`,
+    })
     const dir = categoryDir(file.category);
     fs.mkdirSync(dir, { recursive: true });
 
@@ -40,7 +44,7 @@ export class LocalDiskStorageProvider implements StorageProvider {
     fs.writeFileSync(fullPath, file.buffer);
 
     return {
-      url: `/uploads/${file.category}/${safeName}`,
+      url: (result as { secure_url: string }).secure_url,
       fileName: file.originalName,
       mimeType: file.mimeType,
       size: file.buffer.length,
